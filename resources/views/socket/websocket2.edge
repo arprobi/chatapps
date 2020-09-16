@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Web Socket Adonis</title>
+    </head>
+    <body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.4.0/polyfill.min.js"></script>
+        <script src="https://unpkg.com/@adonisjs/websocket-client@1.0.9/dist/Ws.browser.js"></script>
+        <script>
+            const ws        = adonis.Ws('wss://middleware.bukapeta.id', {})
+            const connect   = ws.
+                                withJwtToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEwLCJpYXQiOjE1NzMwNDI2ODh9.ilAhHEMEI6QKHTH1lBe3IoWMo8Mpn3dydFduinhIlF8')
+                                .connect()
+            const chat      = ws.subscribe('personal:10')
+            
+            // console.log('connection', connect)
+            
+            const message   = {
+                message: "Test halo aku mau nyapa!",
+                to_id: 2,
+                reply_to: 0,
+                attachment_id: 0
+            }
+
+            chat.on('ready', () => {
+                console.log('sudah ready')
+            })         
+            
+            chat.on('error', (error) => {
+                console.log('error :', error)
+            })
+            
+            chat.on('close', (close) => {
+                console.log('close: ', close);
+            })
+            
+            chat.on('message', (msg) => {
+                console.log('ada message nih', msg);
+            })
+            
+            chat.emit('message', message)
+
+        </script>
+    </body>
+</html>

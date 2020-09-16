@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- Head-->
+    <head>
+        @include('modules.layout.partials.head')
+        @!section('style')
+    </head>
+
+    <body class="animsition">
+        <div class="page-wrapper">
+            <!-- HEADER MOBILE-->
+            @include('modules.layout.partials.mobile_header')
+
+            <!-- MENU SIDEBAR-->
+            @include('modules.layout.partials.navbar')
+
+            <!-- PAGE CONTAINER-->
+            <div class="page-container">
+                <!-- HEADER DESKTOP-->
+                @include('modules.layout.partials.desktop_header')
+
+                <!-- MAIN CONTENT-->
+                <div class="main-content">
+                    <div class="section__content section__content--p30">
+                        <div class="container-fluid">
+                            @!section('content')
+                            <div class="row">
+                                <footer class="col-md-12">
+                                    <div class="copyright">
+                                        <p>Copyright © 2019 Kerja Team</p>
+                                    </div>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCRIPT-->
+        @include('modules.layout.partials.script')
+        @!section('script')
+        {{ script('js/actions.js') }}
+    </body>
+</html>

@@ -1,0 +1,45 @@
+@layout('modules.layout.main')
+
+@section('content')
+<div class="row">
+    <div class="col-md-12">
+        <!-- DETAIL DATA -->
+        <div class="col-md-12">
+            <!-- USER DATA-->
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <h3 class="title-3 m-b-30">
+                        <i class="zmdi zmdi-case"></i>{{ company.name }}</h3>
+                    </div>
+                    
+                    <hr class="mr-auto">
+
+                    <h4 class="bd-lead mb-2">Description</h4>
+                    <p>{{ company.description }}</p>
+
+                    <hr class="mr-auto">
+
+                    <h4 class="bd-lead mb-2">Author</h4>
+                    <p>{{ company.owner.name }}</p>
+
+                    <hr class="mr-auto">
+
+                    <h4 class="bd-lead mb-2">Status</h4>
+                    <p>{{ company.str_status }}</p>
+
+                    <hr class="mr-auto">
+
+                    <h4 class="bd-lead mb-2">Markas</h4>
+                    <div class="list-group mb-2">
+                        {{ company.markas.name }}
+                    </div>
+                </div>
+            </div>
+            <!-- END USER DATA-->
+            
+        </div>
+        
+    </div>
+</div>
+@endsection

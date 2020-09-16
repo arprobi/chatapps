@@ -1,0 +1,78 @@
+@layout('modules.layout.main')
+
+@section('content')
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <strong>Import User</strong> CSV
+        </div>
+        
+        @if(flashMessage('success'))
+            <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+                <span class="badge badge-pill badge-success">Congrats!</span>
+                {{ flashMessage('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        @endif
+        @if(flashMessage('error'))
+            <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+                <span class="badge badge-pill badge-danger">Oops!</span>
+                {{ flashMessage('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        @endif
+
+        <div class="card-body card-block">
+            <form action="{{ route('admin.users.importdata') }}" method="POST" enctype="multipart/form-data"lass="form-horizontal" id="form-input">
+                {{ csrfField() }}
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="name" class=" form-control-label">Team Name</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <select name="team" class="{{ getErrorFor('team') ? 'is-invalid':'' }} form-control">
+                            <option value="0">Select Team</option>
+                            @each(team in teams)
+                                <option value="{{ team.id }}">{{ team.company.name }} - {{ team.name }}</option>
+                            @endeach
+                        </select>
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('team'), hasErrorFor('team')) }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="name" class=" form-control-label">File</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="file" name="file" class="from-control">
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('file'), hasErrorFor('file')) }}
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <div class="card-footer">
+            <button type="button" class="btn btn-primary btn-sm btn-save">
+                <i class="fa fa-dot-circle-o"></i> Submit
+            </button>
+            <button type="reset" class="btn btn-danger btn-sm">
+                <i class="fa fa-ban"></i> Reset
+            </button>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        $('.btn-save').on('click', function(){
+            $('#form-input').submit();
+        })
+    })
+</script>
+@endsection

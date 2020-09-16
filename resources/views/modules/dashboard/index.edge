@@ -1,0 +1,54 @@
+@layout('modules.layout.main')
+
+@section('content')
+<div class="row">
+    <div class="col-lg-3 col-sm-6">
+        <div class="card gradient-1">
+            <div class="card-body">
+                <h3 class="card-title text-white">Members</h3>
+                <div class="d-inline-block">
+                    <h2 class="text-white">{{ members }}</h2>
+                    <p class="text-white mb-0">Jan - March 2019</p>
+                </div>
+                <span class="float-right display-5 opacity-5"><i class="fa fa-users"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6">
+        <div class="card gradient-2">
+            <div class="card-body">
+                <h3 class="card-title text-white">Companies</h3>
+                <div class="d-inline-block">
+                    <h2 class="text-white">{{ companies }}</h2>
+                    <p class="text-white mb-0">Jan - March 2019</p>
+                </div>
+                <span class="float-right display-5 opacity-5"><i class="fa fa-building"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6">
+        <div class="card gradient-3">
+            <div class="card-body">
+                <h3 class="card-title text-white">Teams</h3>
+                <div class="d-inline-block">
+                    <h2 class="text-white">{{ teams }}</h2>
+                    <p class="text-white mb-0">Jan - March 2019</p>
+                </div>
+                <span class="float-right display-5 opacity-5"><i class="fa fa-area-chart"></i></span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-sm-6">
+        <div class="card gradient-4">
+            <div class="card-body">
+                <h3 class="card-title text-white">Projects</h3>
+                <div class="d-inline-block">
+                    <h2 class="text-white">{{ projects }}</h2>
+                    <p class="text-white mb-0">Jan - March 2019</p>
+                </div>
+                <span class="float-right display-5 opacity-5"><i class="fa fa-home"></i></span>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

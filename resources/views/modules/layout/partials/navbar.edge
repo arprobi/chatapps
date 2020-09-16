@@ -1,0 +1,38 @@
+<aside class="menu-sidebar d-none d-lg-block">
+    <div class="logo">
+        <a href="#">
+            <img src="{{ assetsUrl('images/icon/logo.png') }}" alt="Logo Kerja Team">
+        </a>
+    </div>
+    <div class="menu-sidebar__content js-scrollbar1">
+        <nav class="navbar-sidebar">
+            <ul class="list-unstyled navbar__list">
+                <li class="active">
+                    <a href="{{ route('admin.dashboard') }}"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.companies') }}">
+                    <i class="fas fa-briefcase"></i>Companies</a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.teams') }}">
+                    <i class="fas fa-users"></i>Teams</a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.projects') }}">
+                    <i class="fas fa-th-large"></i>Projects</a>
+                </li>
+                <li class="has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas fa-user"></i>Users Management</a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                        <li>
+                            <a href="{{ route('admin.users') }}">Users</a>
+                            <a href="{{ route('admin.admins') }}">Admin</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>

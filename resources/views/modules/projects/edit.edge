@@ -1,0 +1,88 @@
+@layout('modules.layout.main')
+
+@section('content')
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <strong>Update Project</strong> Form
+        </div>
+        <div class="card-body card-block">
+            <form action="{{ route('admin.projects.update', {id: project.id}) }}" method="POST" class="form-horizontal" id="form-input">
+                {{ csrfField() }}
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="name" class=" form-control-label">Project Name</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" name="project_name" placeholder="project name" class="{{ getErrorFor('project_name') ? 'is-invalid':'' }} form-control" value="{{ project.project_name }}">
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('project_name'), hasErrorFor('project_name')) }}
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="project_description" class=" form-control-label">Description</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <textarea name="project_description" class="{{ getErrorFor('project_description') ? 'is-invalid':'' }} form-control">{{ project.project_description }}</textarea>
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('project_description'), hasErrorFor('project_description')) }}
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="name" class=" form-control-label">Start Date</label>
+                    </div>
+                    <div class="col-12 col-md-9 date">
+                        <input type="text" name="start_date" placeholder="start date" class="{{ getErrorFor('start_date') ? 'is-invalid':'' }} form-control date datepicker" value="{{ project.start_date }}">
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('start_date'), hasErrorFor('start_date')) }}
+                    </div>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="name" class=" form-control-label">Due Date</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" name="due_date" placeholder="due date" class="{{ getErrorFor('due_date') ? 'is-invalid':'' }} form-control date datepicker" value="{{ project.due_date }}">
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('due_date'), hasErrorFor('due_date')) }}
+                    </div>
+                </div>
+                
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="password" class=" form-control-label">Status</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <select name="status" class="{{ getErrorFor('status') ? 'is-invalid':'' }} form-control">
+                            <option value="1" {{ project.status == 1 ? 'selected' : '' }}>Active</option>
+                            <option value="0" {{ project.status == 0 ? 'selected' : '' }}>Inactive</option>
+                        </select>
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('status'), hasErrorFor('status')) }}
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-primary btn-sm btn-save">
+                <i class="fa fa-dot-circle-o"></i> Submit
+            </button>
+            <button type="reset" class="btn btn-danger btn-sm">
+                <i class="fa fa-ban"></i> Reset
+            </button>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        $('.btn-save').on('click', function(){
+            $('#form-input').submit();
+        });
+
+        $('.datepicker').datetimepicker();
+    })
+</script>
+@endsection

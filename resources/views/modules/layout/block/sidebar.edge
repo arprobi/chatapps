@@ -1,0 +1,28 @@
+<div class="nk-sidebar">           
+    <div class="nk-nav-scroll">
+        <ul class="metismenu" id="menu">
+            <li class="nav-label">Menu</li>
+            <li>
+                <a href="{{ route('admin.dashboard') }}" aria-expanded="false">
+                    <i class="icon-speedometer menu-icon"></i><span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.companies') }}" aria-expanded="false">
+                    <i class="icon-briefcase menu-icon"></i><span class="nav-text">Company Management</span>
+                </a>
+            </li>
+
+            <li class="nav-label">User Menu</li>
+            <li class="mega-menu mega-menu-sm">
+                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                    <i class="icon-people menu-icon"></i><span class="nav-text">User Management</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('admin.users') }}">Application User</a></li>
+                    <li><a href="{{ route('admin.admins') }}">Administrator</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

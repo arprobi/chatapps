@@ -1,0 +1,100 @@
+@layout('modules.layout.main')
+
+@section('style')
+    {{ style('https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css') }}
+@endsection
+
+@section('content')
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">Project Table</h3>
+        @if(flashMessage('success'))
+            <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+                <span class="badge badge-pill badge-success">Congrats!</span>
+                {{ flashMessage('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        @endif
+        @if(flashMessage('error'))
+            <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+                <span class="badge badge-pill badge-danger">Oops!</span>
+                {{ flashMessage('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        @endif
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2" id="data-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Author</th>
+                        <th>Company</th>
+                        <th>Created at</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>
+@endsection
+
+@section('script')
+    {{ script('https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js') }}
+    {{ script('https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js') }}
+    <script>
+        $(document).ready(function() {
+            var url     = '/admin/teams/fetch/data'
+            var table   = $('#data-table').DataTable({
+                responsive: true,
+                ajax: url,
+                columns: [
+                    { data: "name", searchable:true },
+                    { data: "owner.name", searchable:true },
+                    { data: "company.name", searchable:true },
+                    { data: "created_at", searchable:true },
+                    { data: "str_status", searchable:true },
+                    {
+                        "mRender": function(data, type, row) {
+                            return  '<div class="table-data-feature" style="text-align: center;">' + 
+                                        '<button class="item btn-show" data-id="' + row.id + '" data-toggle="tooltip" data-placement="top" title="Show">' +
+                                            '<i class="zmdi zmdi-search"></i>' + 
+                                        '</button>' +
+                                        '<button class="item btn-edit" data-id="' + row.id + '" data-toggle="tooltip" data-placement="top" title="Edit">' +
+                                            '<i class="zmdi zmdi-edit"></i>' + 
+                                        '</button>' +
+                                        '<button class="item btn-delete" data-id="' + row.id + '" data-toggle="tooltip" data-placement="top" title="Delete">' +
+                                            '<i class="zmdi zmdi-delete"></i>' + 
+                                        '</button>' +
+                                    '</div>';
+                        }
+                    }
+                ],
+                columnDefs: [
+                    {targets: 5, orderable: false},
+                    {
+                        targets: 4, 
+                        render: function(data, type, row) {
+                            if (data === 'active') {
+                                return '<span class="badge badge-success">Active</span>'
+                            }
+                            if (data === 'inactive') {
+                                return '<span class="badge badge-danger">Innactive</span>'
+                            }
+                        }
+                    }
+                ]
+            });
+        } );
+    </script>
+@endsection

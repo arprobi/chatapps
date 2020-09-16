@@ -1,0 +1,2127 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Middleware Bukapeta</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>
+        hljs.configure({
+            tabReplace: '    ',
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <style>body {
+    position: relative;
+}
+
+h1 {
+    margin-top: 5px;
+}
+
+h1, h2, h3, h4 {
+    color: #2b2b2b;
+}
+
+h2:after {
+    content: ' ';
+}
+
+h5 {
+    font-weight: bold;
+}
+
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    display: none;
+    position: absolute;
+    margin-left: 8px;
+}
+
+h1:hover a, h2:hover a, h3:hover a, h4:hover a, h5:hover a, h6:hover a {
+    color: #a5a5a5;
+    display: initial;
+}
+
+.nav.nav-tabs > li > a {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.tab-content {
+    padding-top: 8px;
+}
+
+.table {
+    margin-bottom: 8px;
+}
+
+pre {
+    border-radius: 0px;
+    border: none;
+}
+
+pre code {
+    margin: -9.5px;
+}
+
+.request {
+    margin-top: 12px;
+    margin-bottom: 24px;
+}
+
+.response-text-sample {
+    padding: 0px !important;
+}
+
+.response-text-sample pre {
+    margin-bottom: 0px;
+}
+
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 250px;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #2b2b2b;
+    padding-top: 20px;
+}
+
+#sidebar-wrapper ul {
+    width: 250px;
+}
+
+#sidebar-wrapper ul li {
+    margin-right: 10px;
+}
+
+#sidebar-wrapper ul li a:hover {
+    background: inherit;
+    text-decoration: none;
+}
+
+#sidebar-wrapper ul li a {
+    display: block;
+    color: #ECF0F1;
+    padding: 6px 15px;
+}
+
+#sidebar-wrapper ul li ul {
+    padding-left: 25px;
+}
+
+#sidebar-wrapper ul li ul li a {
+    padding: 1px 0px;
+}
+
+#sidebar-wrapper ul li a:hover,
+#sidebar-wrapper ul li a:focus {
+    color: #e0c46c;
+    border-right: solid 1px #e0c46c;
+}
+
+#sidebar-wrapper ul li.active > a {
+    color: #e0c46c;
+    border-right: solid 3px #e0c46c;
+}
+
+#sidebar-wrapper ul li:not(.active) ul {
+    display: none;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px 15px 15px 250px;
+}
+</style>
+</head>
+<body data-spy="scroll" data-target=".scrollspy">
+<div id="sidebar-wrapper">
+    <div class="scrollspy">
+    <ul id="main-menu" data-spy="affix" class="nav">
+        <li>
+            <a href="#doc-general-notes">General notes</a>
+        </li>
+
+        <li>
+            <a href="#doc-api-detail">API detail</a>
+        </li>
+
+
+
+        <li>
+            <a href="#folder-company">Company</a>
+            <ul>
+
+                <li>
+                    <a href="#request-company-list">List</a>
+                </li>
+
+                <li>
+                    <a href="#request-company-store">Store</a>
+                </li>
+
+                <li>
+                    <a href="#request-company-detail">Detail</a>
+                </li>
+
+                <li>
+                    <a href="#request-company-update-company">Update Company</a>
+                </li>
+
+                <li>
+                    <a href="#request-company-list-user">List User</a>
+                </li>
+
+                <li>
+                    <a href="#request-company-add-user">Add User</a>
+                </li>
+
+                <li>
+                    <a href="#request-company-remove-user">Remove User</a>
+                </li>
+
+                <li>
+                    <a href="#request-company-delete">Delete</a>
+                </li>
+
+            </ul>
+        </li>
+
+
+        <li>
+            <a href="#folder-discussion">Discussion</a>
+            <ul>
+
+                <li>
+                    <a href="#request-discussion-list">List</a>
+                </li>
+
+                <li>
+                    <a href="#request-discussion-store">Store</a>
+                </li>
+
+                <li>
+                    <a href="#request-discussion-delete">Delete</a>
+                </li>
+
+            </ul>
+        </li>
+
+
+        <li>
+            <a href="#folder-project">Project</a>
+            <ul>
+
+                <li>
+                    <a href="#request-project-list">List</a>
+                </li>
+
+                <li>
+                    <a href="#request-project-store">Store</a>
+                </li>
+
+                <li>
+                    <a href="#request-project-detail">Detail</a>
+                </li>
+
+                <li>
+                    <a href="#request-project-update-project">Update Project</a>
+                </li>
+
+                <li>
+                    <a href="#request-project-delete-project">Delete Project</a>
+                </li>
+
+            </ul>
+        </li>
+
+
+        <li>
+            <a href="#folder-team">Team</a>
+            <ul>
+
+                <li>
+                    <a href="#request-team-list">List</a>
+                </li>
+
+                <li>
+                    <a href="#request-team-store">Store</a>
+                </li>
+
+                <li>
+                    <a href="#request-team-detail">Detail</a>
+                </li>
+
+                <li>
+                    <a href="#request-team-delete">Delete</a>
+                </li>
+
+                <li>
+                    <a href="#request-team-update">Update</a>
+                </li>
+
+                <li>
+                    <a href="#request-team-add-user">Add User</a>
+                </li>
+
+                <li>
+                    <a href="#request-team-remove-user">Remove User</a>
+                </li>
+
+                <li>
+                    <a href="#request-team-list-project">List Project</a>
+                </li>
+
+            </ul>
+        </li>
+
+
+        <li>
+            <a href="#folder-todo">Todo</a>
+            <ul>
+
+                <li>
+                    <a href="#request-todo-list">List</a>
+                </li>
+
+                <li>
+                    <a href="#request-todo-store">Store</a>
+                </li>
+
+                <li>
+                    <a href="#request-todo-set-done">Set Done</a>
+                </li>
+
+                <li>
+                    <a href="#request-todo-set-undone">Set Undone</a>
+                </li>
+
+                <li>
+                    <a href="#request-todo-delete">Delete</a>
+                </li>
+
+            </ul>
+        </li>
+
+
+        <li>
+            <a href="#folder-user">User</a>
+            <ul>
+
+                <li>
+                    <a href="#request-user-register">Register</a>
+                </li>
+
+                <li>
+                    <a href="#request-user-login">Login</a>
+                </li>
+
+                <li>
+                    <a href="#request-user-profile">Profile</a>
+                </li>
+
+                <li>
+                    <a href="#request-user-list">List</a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li style="margin-top:40px; border-top:1px solid #FFF">
+            <a href="#websocket">Campfire</a>
+            <ul>
+                <li>
+                    <a href="#websocket-connet">Connect</a>
+                </li>
+                <li>
+                    <a href="#websocket-subscribe">Subscribe Topic</a>
+                </li>
+                <li>
+                    <a href="#websocket-emit">Push Message</a>
+                </li>
+                <li>
+                    <a href="#websocket-listen">On Message</a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="#webadmin">Dashboard CMS</a>
+        </li>
+    </ul>
+</div>
+
+</div>
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Middleware Bukapeta</h1>
+
+                <h2 id="doc-general-notes">
+                    General notes
+                    <a href="#doc-general-notes"><i class="glyphicon glyphicon-link"></i></a>
+                </h2>
+
+                <p>Middleware for Bukapeta</p>
+                <p>
+                    Aplikasi middleware bukapeta di buat dengan menggunakan framework <a href="https://adonisjs.com/">adonisjs</a>, dan untuk menjalankan aplikasi jalankan perintah "<code>npm start</code>" dan akan menghasilkan sebuah file <code>/home/middleware/socket/middleware.sock</code> yang nantinya akan di gunakan untuk setup nginx.
+                </p>
+                <br /><br />
+
+<p>Setiap melakukan request, perlu adanya tambahan di headers dengan ketentuan sebagai berikut:</p>
+
+<p>Content-Type: application/json
+application-key: c48bd1cea3af7905983942760a90a312MiIlUznPw02N22slr6RRJwEo2uyBG2dmjie6Ek5Eyx0=</p>
+
+<p>Note:
+application-key ini bersifat unique, dan setiap applikasi mempunyai key sendiri-sendiri, dan untuk aplikasi bukapeta.id adalah c48bd1cea3af7905983942760a90a312MiIlUznPw02N22slr6RRJwEo2uyBG2dmjie6Ek5Eyx0=</p>
+
+
+
+
+                <h2 id="doc-api-detail">
+                    API detail
+                    <a href="#doc-api-detail"><i class="glyphicon glyphicon-link"></i></a>
+                </h2>
+
+
+
+
+
+
+                <div class="endpoints-group">
+                    <h3 id="folder-company">
+                        Company
+                        <a href="#folder-company"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div><p>Company module</p>
+</div>
+
+
+
+                    <div class="request">
+
+                        <h4 id="request-company-list">
+                            List
+                            <a href="#request-company-list"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>List user&rsquo;s logged in company</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-company-list-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-company-list-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-company-list-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/company"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-company-list-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/company HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-company-store">
+                            Store
+                            <a href="#request-company-store"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Create user&rsquo;s company</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-company-store-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-company-store-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-company-store-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" -d "name=PT Testing&description=Testing company&logo=https://akcdn.detik.net.id/visual/2019/02/24/61280182-de80-4d16-bc83-4aa504521dee_169.jpeg?w=600&q=90&status=0" "https://middleware.bukapeta.id/api/v1/company/create"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-company-store-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/company/create HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo
+Content-Type: application/x-www-form-urlencoded
+
+name=PT Testing&description=Testing company&logo=https://akcdn.detik.net.id/visual/2019/02/24/61280182-de80-4d16-bc83-4aa504521dee_169.jpeg?w=600&q=90&status=0</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-company-detail">
+                            Detail
+                            <a href="#request-company-detail"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get detail company by id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-company-detail-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-company-detail-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-company-detail-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/company/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-company-detail-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/company/1 HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-company-update-company">
+                            Update Company
+                            <a href="#request-company-update-company"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Update company by company id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-company-update-company-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-company-update-company-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-company-update-company-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" -d "name=PT Tutuplapak&description=Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s&project_logo=http://cdn2.tstatic.net/banjarmasin/foto/bank/images/avriellya-shaqila.jpg&status=1" "https://middleware.bukapeta.id/api/v1/company/1/update"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-company-update-company-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/company/1/update HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo
+Content-Type: application/x-www-form-urlencoded
+
+name=PT Tutuplapak&description=Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s&project_logo=http://cdn2.tstatic.net/banjarmasin/foto/bank/images/avriellya-shaqila.jpg&status=1</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-company-list-user">
+                            List User
+                            <a href="#request-company-list-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div></div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-company-list-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-company-list-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-company-list-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/company/1/listuser"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-company-list-user-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/company/1/listuser HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-company-add-user">
+                            Add User
+                            <a href="#request-company-add-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div></div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-company-add-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-company-add-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-company-add-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" -d "user_id=2" "https://middleware.bukapeta.id/api/v1/company/1/adduser"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-company-add-user-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/company/1/adduser HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo
+Content-Type: application/x-www-form-urlencoded
+
+user_id=2</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-company-remove-user">
+                            Remove User
+                            <a href="#request-company-remove-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div></div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-company-remove-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-company-remove-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-company-remove-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" -d "user_id=2" "https://middleware.bukapeta.id/api/v1/company/1/removeuser"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-company-remove-user-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/company/1/removeuser HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo
+Content-Type: application/x-www-form-urlencoded
+
+user_id=2</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-company-delete">
+                            Delete
+                            <a href="#request-company-delete"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div></div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-company-delete-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-company-delete-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-company-delete-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/company/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-company-delete-example-http">
+                                    <pre><code class="hljs http">DELETE /api/v1/company/1 HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                </div>
+
+
+                <div class="endpoints-group">
+                    <h3 id="folder-discussion">
+                        Discussion
+                        <a href="#folder-discussion"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div></div>
+
+
+
+                    <div class="request">
+
+                        <h4 id="request-discussion-list">
+                            List
+                            <a href="#request-discussion-list"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>List discussion by project</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-discussion-list-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-discussion-list-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-discussion-list-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/discussion/project/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-discussion-list-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/discussion/project/1 HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-discussion-store">
+                            Store
+                            <a href="#request-discussion-store"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Add discussion by project id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-discussion-store-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-discussion-store-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-discussion-store-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" -d "type=1&message=Oalaah lupa ga ada anggotanya hihi" "https://middleware.bukapeta.id/api/v1/discussion/project/1/create"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-discussion-store-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/discussion/project/1/create HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo
+Content-Type: application/x-www-form-urlencoded
+
+type=1&message=Oalaah lupa ga ada anggotanya hihi</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-discussion-delete">
+                            Delete
+                            <a href="#request-discussion-delete"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Delete discuss by discussion id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-discussion-delete-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-discussion-delete-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-discussion-delete-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/discussion/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-discussion-delete-example-http">
+                                    <pre><code class="hljs http">DELETE /api/v1/discussion/1 HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                </div>
+
+
+                <div class="endpoints-group">
+                    <h3 id="folder-project">
+                        Project
+                        <a href="#folder-project"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div></div>
+
+
+
+                    <div class="request">
+
+                        <h4 id="request-project-list">
+                            List
+                            <a href="#request-project-list"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Show project list, created by logged in user</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-project-list-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-project-list-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-project-list-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/project/list/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-project-list-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/project/list/1 HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-project-store">
+                            Store
+                            <a href="#request-project-store"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div></div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-project-store-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-project-store-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-project-store-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" -d "project_name=Testing Project&project_description=Lorem ipsum is dummy text &project_logo=https://akcdn.detik.net.id/visual/2019/02/24/61280182-de80-4d16-bc83-4aa504521dee_169.jpeg?w=600&q=90&start_date=2019-02-25&due_date=2019-02-28&status=1" "https://middleware.bukapeta.id/api/v1/project/create/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-project-store-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/project/create/1 HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo
+Content-Type: application/x-www-form-urlencoded
+
+project_name=Testing Project&project_description=Lorem ipsum is dummy text &project_logo=https://akcdn.detik.net.id/visual/2019/02/24/61280182-de80-4d16-bc83-4aa504521dee_169.jpeg?w=600&q=90&start_date=2019-02-25&due_date=2019-02-28&status=1</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+
+                                <li role="presentation" class="active">
+                                    <a href="#request-project-store-responses-44efe763-3fbd-4c91-9a00-6f2844bf18a0" data-toggle="tab">
+
+                                            Response
+
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content">
+
+                                <div class="tab-pane active" id="request-project-store-responses-44efe763-3fbd-4c91-9a00-6f2844bf18a0">
+                                    <table class="table table-bordered">
+                                        <tr><th style="width: 20%;">Status</th><td>200 </td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>Tue, 29 Jan 2019 10:59:24 GMT</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>application/json; charset=utf-8</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>chunked</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>keep-alive</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>adonis-session=eb07e7fe6d361fb3f036a7628106d944ZXhBrCaEjstOV4cXtQhzW3zFeAuWOpPbO27qQJgjKqFvv1LoJAv6lqmldXOai%2BagAjgeBYFmIZmKn7cSFpwPE%2F8eyZa%2B76BO1dL9wygBxpyUdhOTkeY%2Bwep%2FLYsrCZqO; Path=/; HttpOnly</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>XSRF-TOKEN=5c829de0ae24a700fb23865da83faecdytu2qp%2Fh4I4VCvNYWzriqoAH9m6n2iH6yIGrrrPcMKn2OH%2FSAgpt%2B9FwKSePtqccDrdyMruzqIAejmTMK0yBJZJXa4nmh6FfvAxw88namB9XLXo4MD0XD7v7dRH%2FTEzi; Max-Age=7200; Path=/; SameSite=Strict</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>adonis-session-values=1c890ee797e16eae0d1d857b4527912cf3yez54VeCNnO3SrNXqsQr2RvCt2EvEO3kKEm3fIbb%2BbXrj7slZRNFH7Ksd0UOOIKRqv8JJW6IEzDME9xT2CrYp9z657PlFbS9ZzT5SuM4DYBbJ0kmk%2B7TXqu3nPaaADM8xOkcV1VgdBSHeXlm1NbUqA3nHhFs9OPWXxPjvFhTk%3D; Path=/; HttpOnly</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>DENY</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>1; mode=block</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>nosniff</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>noopen</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>cloudflare</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>4a0b3070aec6c360-SIN</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>gzip</td></tr>
+
+
+
+                                            <tr><td class="response-text-sample" colspan="2">
+                                                <pre><code>{
+    "status": 200,
+    "message": "Application created!",
+    "data": {
+        "user_id": 1,
+        "app_key": "bukapeta.id",
+        "app_name": "Bukapeta",
+        "app_description": "Bukapeta",
+        "app_site": "https://www.bukapeta.id",
+        "app_logo": "https://akcdn.detik.net.id/visual/2019/01/19/16008720-c73f-4507-b558-0499e3703140_169.png?w=900&q=90",
+        "is_active": 0
+    }
+}</code></pre>
+                                            </td></tr>
+
+
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-project-detail">
+                            Detail
+                            <a href="#request-project-detail"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Get detail project by ID</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-project-detail-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-project-detail-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-project-detail-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/project/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-project-detail-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/project/1 HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-project-update-project">
+                            Update Project
+                            <a href="#request-project-update-project"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Update project by project id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-project-update-project-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-project-update-project-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-project-update-project-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" -d "project_name=Peta Desa&project_description=Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s&project_logo=https://media.matamata.com/thumbs/2018/05/20/59001-nancy-momoland/745x489-img-59001-nancy-momoland.jpg&status=1&due_date=2019-06-26 20:49:09&start_date=2019-02-28 20:49:09" "https://middleware.bukapeta.id/api/v1/project/1/update"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-project-update-project-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/project/1/update HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo
+Content-Type: application/x-www-form-urlencoded
+
+project_name=Peta Desa&project_description=Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s&project_logo=https://media.matamata.com/thumbs/2018/05/20/59001-nancy-momoland/745x489-img-59001-nancy-momoland.jpg&status=1&due_date=2019-06-26 20:49:09&start_date=2019-02-28 20:49:09</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-project-delete-project">
+                            Delete Project
+                            <a href="#request-project-delete-project"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div></div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-project-delete-project-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-project-delete-project-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-project-delete-project-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/project/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-project-delete-project-example-http">
+                                    <pre><code class="hljs http">DELETE /api/v1/project/1 HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                </div>
+
+
+                <div class="endpoints-group">
+                    <h3 id="folder-team">
+                        Team
+                        <a href="#folder-team"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div></div>
+
+
+
+                    <div class="request">
+
+                        <h4 id="request-team-list">
+                            List
+                            <a href="#request-team-list"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>List team</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-team-list-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-team-list-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-team-list-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/team/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-team-list-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/team/1 HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-team-store">
+                            Store
+                            <a href="#request-team-store"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Create teams</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-team-store-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-team-store-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-team-store-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" -d "name=Frontend Dev&description=Frontend developer team&status=1" "https://middleware.bukapeta.id/api/v1/team/1/create"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-team-store-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/team/1/create HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo
+Content-Type: application/x-www-form-urlencoded
+
+name=Frontend Dev&description=Frontend developer team&status=1</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-team-detail">
+                            Detail
+                            <a href="#request-team-detail"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Detail team by id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-team-detail-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-team-detail-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-team-detail-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/team/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-team-detail-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/team/1 HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-team-delete">
+                            Delete
+                            <a href="#request-team-delete"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div></div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-team-delete-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-team-delete-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-team-delete-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/team/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-team-delete-example-http">
+                                    <pre><code class="hljs http">DELETE /api/v1/team/1 HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-team-update">
+                            Update
+                            <a href="#request-team-update"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div></div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-team-update-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-team-update-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-team-update-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" -d "name=Front End Dev&description=Frontend developer team&status=1" "https://middleware.bukapeta.id/api/v1/team/1/update"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-team-update-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/team/1/update HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo
+Content-Type: application/x-www-form-urlencoded
+
+name=Front End Dev&description=Frontend developer team&status=1</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-team-add-user">
+                            Add User
+                            <a href="#request-team-add-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div></div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-team-add-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-team-add-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-team-add-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" -d "user_id=2" "https://middleware.bukapeta.id/api/v1/team/1/adduser"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-team-add-user-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/team/1/adduser HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo
+Content-Type: application/x-www-form-urlencoded
+
+user_id=2</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-team-remove-user">
+                            Remove User
+                            <a href="#request-team-remove-user"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div></div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-team-remove-user-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-team-remove-user-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-team-remove-user-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" -d "user_id=2" "https://middleware.bukapeta.id/api/v1/team/1/removeuser"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-team-remove-user-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/team/1/removeuser HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo
+Content-Type: application/x-www-form-urlencoded
+
+user_id=2</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-team-list-project">
+                            List Project
+                            <a href="#request-team-list-project"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>List Project by Team</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-team-list-project-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-team-list-project-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-team-list-project-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/team/1/project"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-team-list-project-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/team/1/project HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                </div>
+
+
+                <div class="endpoints-group">
+                    <h3 id="folder-todo">
+                        Todo
+                        <a href="#folder-todo"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div></div>
+
+
+
+                    <div class="request">
+
+                        <h4 id="request-todo-list">
+                            List
+                            <a href="#request-todo-list"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>List all todos in project</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-todo-list-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-todo-list-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-todo-list-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/todos/project/1"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-todo-list-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/todos/project/1 HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-todo-store">
+                            Store
+                            <a href="#request-todo-store"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Create todo in project</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-todo-store-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-todo-store-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-todo-store-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" -d "parent_id=1&name=Send Email verification&due_date=2019-03-15 14:35:37" "https://middleware.bukapeta.id/api/v1/todos/project/1/create"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-todo-store-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/todos/project/1/create HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo
+Content-Type: application/x-www-form-urlencoded
+
+parent_id=1&name=Send Email verification&due_date=2019-03-15 14:35:37</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-todo-set-done">
+                            Set Done
+                            <a href="#request-todo-set-done"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Set done todo by todo id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-todo-set-done-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-todo-set-done-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-todo-set-done-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/todos/4/done"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-todo-set-done-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/todos/4/done HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-todo-set-undone">
+                            Set Undone
+                            <a href="#request-todo-set-undone"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Set undone todo by todo id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-todo-set-undone-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-todo-set-undone-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-todo-set-undone-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/todos/4/undone"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-todo-set-undone-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/todos/4/undone HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-todo-delete">
+                            Delete
+                            <a href="#request-todo-delete"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Delete todo by todo id</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-todo-delete-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-todo-delete-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-todo-delete-example-curl">
+                                    <pre><code class="hljs curl">curl -X DELETE -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/todos/4"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-todo-delete-example-http">
+                                    <pre><code class="hljs http">DELETE /api/v1/todos/4 HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                </div>
+
+
+                <div class="endpoints-group">
+                    <h3 id="folder-user">
+                        User
+                        <a href="#folder-user"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div></div>
+
+
+
+                    <div class="request">
+
+                        <h4 id="request-user-register">
+                            Register
+                            <a href="#request-user-register"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div></div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-user-register-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-user-register-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-user-register-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Accept: application/json" -H "Content-Type: application/x-www-form-urlencoded" -d "name=Andrian Robby&username=arprobi&email=arprobi@gmail.com&password=kopiluwak" "https://middleware.bukapeta.id/api/v1/register"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-user-register-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/register HTTP/1.1
+Host: middleware.bukapeta.id
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+Content-Type: application/x-www-form-urlencoded
+
+name=Andrian Robby&username=arprobi&email=arprobi@gmail.com&password=kopiluwak</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+
+                                <li role="presentation" class="active">
+                                    <a href="#request-user-register-responses-9f1ee3f7-2c6f-43a4-9dc1-377c61297d4a" data-toggle="tab">
+
+                                            Response
+
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content">
+
+                                <div class="tab-pane active" id="request-user-register-responses-9f1ee3f7-2c6f-43a4-9dc1-377c61297d4a">
+                                    <table class="table table-bordered">
+                                        <tr><th style="width: 20%;">Status</th><td>200 </td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>Thu, 31 Jan 2019 07:29:23 GMT</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>application/json; charset=utf-8</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>chunked</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>keep-alive</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>adonis-session=e4542cc02a83ca8049d8cf1072dbb2dbQHSGYLqUy3Uo2UFD65%2FT4CXevEHhI6rhCGeeAs9asx8A1xcMQ5TM6ri2ThuIQH36TZF8%2BUkS8f93zSfpkrvYSKI4vJkGwjZpq5foBQCWtw2nx7ZvPS4CpZhxJ8Fr3U7%2B; Path=/; HttpOnly</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>XSRF-TOKEN=4b3ded3ead3cb85241f97ea05d64247dQGfIreoL5mk3nWx%2BNYfKU602jj4IIqWO0qRJLkEvfjrDbFvRrgCAVu8TM0UkY6zMMRzIp4EXmVb1xc0m33nJTOM92m6wIM0aOEk1pU62Yqmuhhlh973S8xGvnXsEbCp6; Max-Age=7200; Path=/; SameSite=Strict</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>adonis-session-values=e0efe38452a6f7e1d1add2ab32272efbXb1qa%2BJuRR%2FU2TX%2BexjwOVggKEY1taJPczHdqrvlTsksF4l42wNNNRPuLKfjMhvmBI%2FK9GxuNjmmufWNYjM5rYAjiinwrQlKnud%2FjB7q2TrdEnQjTIB9JY7dJ9A1Rf0%2Fv4w%2BdougWR%2Fjs%2BBRFZd9wrF9WI4z5Xpt4XspYdwFzHA%3D; Path=/; HttpOnly</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>DENY</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>1; mode=block</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>nosniff</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>noopen</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>cloudflare</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>4a1a77849eae9445-NRT</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>gzip</td></tr>
+
+
+
+                                            <tr><td class="response-text-sample" colspan="2">
+                                                <pre><code>{
+    "status": 200,
+    "message": "Register success!",
+    "data": {
+        "token": {
+            "type": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjUsImlhdCI6MTU0ODkxOTc2M30.zyq6CLks8CdE2NdgX3FlaeuJrCb7NQ6sZSS6EoVUWAA",
+            "refreshToken": null
+        },
+        "user": {
+            "name": "Test User",
+            "email": "abc@email.com",
+            "company": "Test Company",
+            "packet": "free",
+            "created_at": "2019-01-31 14:29:23",
+            "updated_at": "2019-01-31 14:29:23",
+            "id": 5
+        },
+        "detail": {
+            "is_trial": false,
+            "is_trial_available": false,
+            "is_trial_start": null
+        }
+    }
+}</code></pre>
+                                            </td></tr>
+
+
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-user-login">
+                            Login
+                            <a href="#request-user-login"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>Login for get access token</p>
+
+<p><code>POST</code> <a href="https://middleware.bukapeta.id/api/v1/login">https://middleware.bukapeta.id/api/v1/login</a></p>
+
+<p>Headers:
+Content-Type: application/json
+application-key: c48bd1cea3af7905983942760a90a312MiIlUznPw02N22slr6RRJwEo2uyBG2dmjie6Ek5Eyx0=</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-user-login-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-user-login-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-user-login-example-curl">
+                                    <pre><code class="hljs curl">curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Accept: application/json" -H "Content-Type: application/x-www-form-urlencoded" -d "email=abc@email.com&password=123456" "https://middleware.bukapeta.id/api/v1/login"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-user-login-example-http">
+                                    <pre><code class="hljs http">POST /api/v1/login HTTP/1.1
+Host: middleware.bukapeta.id
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+Content-Type: application/x-www-form-urlencoded
+
+email=abc@email.com&password=123456</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+
+                                <li role="presentation" class="active">
+                                    <a href="#request-user-login-responses-231f4eb2-3318-48c6-b155-e35bec7e7d4b" data-toggle="tab">
+
+                                            Response
+
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content">
+
+                                <div class="tab-pane active" id="request-user-login-responses-231f4eb2-3318-48c6-b155-e35bec7e7d4b">
+                                    <table class="table table-bordered">
+                                        <tr><th style="width: 20%;">Status</th><td>200 </td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>Wed, 30 Jan 2019 01:59:21 GMT</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>application/json; charset=utf-8</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>chunked</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>keep-alive</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>adonis-session=bad9af836de60fc26467c9eb91589dccMWdymfsxJgnt2edLtnZTb43m7JAHd1bX1yPiG7dkgnZrxM2MgrEmTZAfXqaUzkQsmQjvIKWyrNae5EmeTZPwulMA17zzpeFl3Gjcsytys5lFrOwgZA42eVcAj9C4fBwQ; Path=/; HttpOnly</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>XSRF-TOKEN=11b41a7573391945e99be605c87e02c4VOtF2jRGfRLpKlzYqQ9bbeCFJyZ4YbwlpX7DamAKhof6CocD9hZ1%2BpliyfgKvpsxqrkhyWlwbG1oUPiQq6p%2F%2Fx5SRgMu1E8r7frlaaU388CEOJEJOmbt9GXA2JqiS7oa; Max-Age=7200; Path=/; SameSite=Strict</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>adonis-session-values=c6a5f6e083bc2867535a123f07a26b44lJqEsDbJGLmDEXguXhRRwSrJMYnAhlhR1LQcid0%2BfA7%2B%2FmuMNCkd%2B%2BNZDsgCpc3dqUC9AZhGpstKlZ9GheyW7pMsYJrgcgh2fEujpcWTHNjYqeevoX7uFUOONHF7qUbS9zVO1aWau3qT3Xyjg2mF%2FuQefNrlXECRr6UyMLr0jlI%3D; Path=/; HttpOnly</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>DENY</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>1; mode=block</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>nosniff</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>noopen</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>cloudflare</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>4a1056b16ffa946f-NRT</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>gzip</td></tr>
+
+
+
+                                            <tr><td class="response-text-sample" colspan="2">
+                                                <pre><code>{
+    "status": 200,
+    "message": "Login success!",
+    "data": {
+        "jwt": {
+            "type": "bearer",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIsImlhdCI6MTU0ODgxMzU2MH0.kKRAXH1eznNpVy9U7vTf1kYSn3mqr_7OVjGF2GRe_5E",
+            "refreshToken": null
+        },
+        "user": {
+            "id": 2,
+            "name": "Testing user",
+            "email": "abc@email.com",
+            "company": "PT Maju Jaya Mundur",
+            "packet": "free",
+            "is_trial": false,
+            "is_trial_available": false,
+            "is_trial_start": null,
+            "created_at": "2019-01-28 22:55:36",
+            "updated_at": "2019-01-28 22:55:36"
+        },
+        "application": {
+            "id": 1,
+            "user_id": 1,
+            "app_key": "$2a$10$F6jHoDLseofaKwp9rzzFdOwULPiWk8wjhsfKauA436lTy.cG1LaLK",
+            "app_name": "Bukapeta",
+            "app_description": "Bukapeta",
+            "app_site": "https://www.bukapeta.id",
+            "app_logo": "https://akcdn.detik.net.id/visual/2019/01/19/16008720-c73f-4507-b558-0499e3703140_169.png?w=900&q=90",
+            "is_active": false,
+            "created_at": "2019-01-29 17:59:25",
+            "updated_at": "2019-01-29 17:59:25"
+        }
+    }
+}</code></pre>
+                                            </td></tr>
+
+
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-user-profile">
+                            Profile
+                            <a href="#request-user-profile"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div></div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-user-profile-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-user-profile-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-user-profile-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/json" -H "application-key: {{APP_KEY}}" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/profile"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-user-profile-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/profile HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/json
+application-key: {{APP_KEY}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+
+                                <li role="presentation" class="active">
+                                    <a href="#request-user-profile-responses-65dd47f4-3d03-46e7-94af-e593391acecf" data-toggle="tab">
+
+                                            Response
+
+                                    </a>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content">
+
+                                <div class="tab-pane active" id="request-user-profile-responses-65dd47f4-3d03-46e7-94af-e593391acecf">
+                                    <table class="table table-bordered">
+                                        <tr><th style="width: 20%;">Status</th><td>200 </td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>Wed, 30 Jan 2019 02:09:11 GMT</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>application/json; charset=utf-8</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>chunked</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>keep-alive</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>adonis-session=6b27e21f34bebde4b768fc073442a1012o%2F%2FfHddpGGan8kZkSzS%2B%2BNH%2Be2iGM3iLOqzUwp0iwvyS66pwaHVEcvPXfigebVN2rNRYEfTCKioXq2zCzUxRESfqf%2BMgRQ%2BKBhJzo15jg8GCHrbfBUbJ3%2B6Nym2jDr7; Path=/; HttpOnly</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>XSRF-TOKEN=9548162c0194039618e33d7ae9341bb0AKncD9Gz3FHUMjpsJA7FZ8PqsY7jj4kqJIk1x9krAS%2BowBC%2BueMjex13a2h2GYlfs8wGVAPhD5zDFAn4lysOhXxcCAO8chy%2BJ%2BTUAgPT4If63SXuZeKTqS%2F6YvUJdkpt; Max-Age=7200; Path=/; SameSite=Strict</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>adonis-session-values=c8178bd0f85a9da2476ce0883f402b76W6mzSvf6qO%2FG%2FfDHasBRcFqs5DDXtegPyEt271DfAVxWVOwYuTMJ6CZ%2Fc9GOJWwjluEfuxOitCG16nbVYypkjvWqsEmnC%2FeKJ7%2FQe8QPfabCPKb3wibKHGnbrNCLfG4VaqS4FpVFVZCehkBwp%2BdV7i7PPXsV0J1HO58q9Vf8Slk%3D; Path=/; HttpOnly</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>DENY</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>1; mode=block</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>nosniff</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>noopen</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>cloudflare</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>4a10651e69732e15-NRT</td></tr>
+
+                                        <tr><th style="width: 20%;"></th><td>gzip</td></tr>
+
+
+
+                                            <tr><td class="response-text-sample" colspan="2">
+                                                <pre><code>{
+    "id": 2,
+    "name": "Testing user",
+    "email": "abc@email.com",
+    "company": "PT Maju Jaya Mundur",
+    "packet": "free",
+    "is_trial": false,
+    "is_trial_available": false,
+    "is_trial_start": null,
+    "created_at": "2019-01-28 22:55:36",
+    "updated_at": "2019-01-28 22:55:36"
+}</code></pre>
+                                            </td></tr>
+
+
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <hr>
+                    </div>
+
+
+                    <div class="request">
+
+                        <h4 id="request-user-list">
+                            List
+                            <a href="#request-user-list"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div><p>List all users</p>
+</div>
+
+                        <div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="#request-user-list-example-curl" data-toggle="tab">Curl</a></li>
+                                <li role="presentation"><a href="#request-user-list-example-http" data-toggle="tab">HTTP</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="request-user-list-example-curl">
+                                    <pre><code class="hljs curl">curl -X GET -H "Content-Type: application/json" -H "application-key: {{APP_KEY}}" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo" "https://middleware.bukapeta.id/api/v1/user"</code></pre>
+                                </div>
+                                <div class="tab-pane" id="request-user-list-example-http">
+                                    <pre><code class="hljs http">GET /api/v1/user HTTP/1.1
+Host: middleware.bukapeta.id
+Content-Type: application/json
+application-key: {{APP_KEY}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU1MDc1ODUzM30.9MX3c18XHUI9ILtJhkk6Qc7UQ7G6gPJPrcaZNd3JqZo</code></pre>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <hr>
+                    </div>
+
+
+                </div>
+
+                <div class="endpoints-group">
+                    <h3 id="websocket">
+                        Campfire
+                        <a href="#websocket"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div>
+                        <p>Untuk fitur campire menggunakan websocket yang agar pesan yang di kirimkan/diterima bisa realtime yang hasil datanya akan di simpan dalam table <a href="#folder-discussion">Discussion</a></p>
+                        <div>
+                            <pre><code class="hljs curl nginx">&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.4.0/polyfill.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/@adonisjs/websocket-client@1.0.9/dist/Ws.browser.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+const ws        = adonis.Ws('wss://middleware.bukapeta.id', {})
+const connect   = ws.
+                    withJwtToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIsImlhdCI6MTU1NDE5MzQ3NH0.oDn1RyDWYh7IEW8SlvaF88SLyPZMPl1Urro2WtzpZRA')
+                    .connect()
+const chat      = ws.subscribe('chat:2')
+
+console.log('connection', connect)
+
+const message   = {
+    project_id: 1,
+    type: 1,
+    message: "User 2 nya ini"
+}
+
+chat.emit('message', message)
+
+chat.on('ready', () => {
+    console.log('sudah ready')
+})
+
+chat.on('error', (error) => {
+    console.log('error :',error)
+})
+
+chat.on('close', (close) => {
+    console.log('close: ', close);
+})
+
+chat.on('message', (msg) => {
+    console.log(msg);
+})
+&lt;/script&gt;</code></pre>
+                        </div>
+                        <p>Contoh: <a href="https://middleware.bukapeta.id/websocket2">https://middleware.bukapeta.id/websocket2</a></p>
+                        <p>Referesi: <a href="https://adonisjs.com/docs/4.1/websocket">https://adonisjs.com/docs/4.1/websocket</a> (server) dan <a href="https://adonisjs.com/docs/4.1/websocket-client">https://adonisjs.com/docs/4.1/websocket-client</a> (client)</p>
+                    </div>
+                    <br /><br />
+
+
+
+                    <div class="request">
+
+                        <h4 id="websocket-connect">
+                            Connect
+                            <a href="#websocket-connect"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div>
+                            <p><code>WSS</code> <a href="wss://middleware.bukapeta.id/adonis-ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIsImlhdCI6MTU1NDE5MzQ3NH0.oDn1RyDWYh7IEW8SlvaF88SLyPZMPl1Urro2WtzpZRA">wss://middleware.bukapeta.id/adonis-ws?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjIsImlhdCI6MTU1NDE5MzQ3NH0.oDn1RyDWYh7IEW8SlvaF88SLyPZMPl1Urro2WtzpZRA</a></p>
+                            <p>catatan: token didapat pada saat login</p>
+                        </div>
+
+                        <h4 id="websocket-subscribe">
+                            Subscribe Topic
+                            <a href="#websocket-connect"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div>
+                            <p>
+                                <pre><code>{
+    "t": 1,
+    "d": {
+        "topic": "chat:[project_id]"
+    }
+}</code></pre>
+                                <code>[project_id]</code> bisa di isi dengan id project yang aktif
+                            </p>
+                            <p>
+                                contoh untuk web: <code>ws.subscribe('chat:2')</code>
+                            </p>
+                        </div>
+
+                        <h4 id="websocket-emit">
+                            Push Message
+                            <a href="#websocket-emit"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+
+                        <div>
+                            <p>
+                                <pre><code>{
+    "t": 7,
+    "d": {
+        "topic": "chat:2",
+        "event": "message",
+        "data": {
+            "project_id": 1,
+            "type": 1,
+            "message": "User 2 nya ini"
+        }
+    }
+}</code></pre>
+                            </p>
+                        </div>
+
+                        <h4 id="websocket-listen">
+                            On Message
+                            <a href="#websocket-listen"><i class="glyphicon glyphicon-link"></i></a>
+                        </h4>
+                        <div>
+                            <p>
+                                <pre><code>chat.on('message', (msg) => {
+    console.log(msg);
+})</code></pre>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="endpoints-group" style="margin-top:40px">
+                    <h3 id="webadmin">
+                        Dashboard CMS
+                        <a href="#webadmin"><i class="glyphicon glyphicon-link"></i></a>
+                    </h3>
+
+                    <div></div>
+
+                    <div class="request">
+                        <a href="https://middleware.bukapeta.id/admin">https://middleware.bukapeta.id/admin</a>
+                        <p>
+                            <code>user:</code> superadmin@gmail.com<br />
+                            <code>password:</code> kopiluwak
+                        </p>
+                        <p>
+                            <img src="/images/dashboard.JPG" width="100%" />
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("table:not(.table)").addClass('table table-bordered');
+    });
+</script>
+</body>
+</html>

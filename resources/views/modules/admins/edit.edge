@@ -1,0 +1,92 @@
+@layout('modules.layout.main')
+
+@section('content')
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <strong>Update Admin</strong> Form
+        </div>
+        <div class="card-body card-block">
+            <form action="{{ route('admin.admins.update', {id: admin.id}) }}" method="POST" class="form-horizontal" id="form-input">
+                {{ csrfField() }}
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="name" class=" form-control-label">Name</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" name="name" placeholder="name" class="{{ getErrorFor('name') ? 'is-invalid':'' }} form-control" value="{{ admin.name }}">
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('name'), hasErrorFor('name')) }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="username" class=" form-control-label">Username</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" name="username" placeholder="username" class="{{ getErrorFor('username') ? 'is-invalid':'' }} form-control" value="{{ admin.username }}">
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('username'), hasErrorFor('username')) }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="email" class=" form-control-label">Email</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="email" name="email" placeholder="email" class="{{ getErrorFor('email') ? 'is-invalid':'' }} form-control" value="{{ admin.email }}">
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('email'), hasErrorFor('email')) }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="password" class=" form-control-label">Password</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="password" name="password" placeholder="password" class="{{ getErrorFor('password') ? 'is-invalid':'' }} form-control" value="{{ old('password', '') }}">
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('password'), hasErrorFor('password')) }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="password_confirmation" class=" form-control-label">Confirm Password</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="password" name="password_confirmation" placeholder="confirm password" class="{{ getErrorFor('password_confirmation') ? 'is-invalid':'' }} form-control" value="{{ old('password_confirmation', '') }}">
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('password_confirmation'), hasErrorFor('password_confirmation')) }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="password" class=" form-control-label">Status</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <select name="status" class="{{ getErrorFor('status') ? 'is-invalid':'' }} form-control">
+                            <option value="1" {{ admin.status == '1' ? 'selected' : '' }}>Active</option>
+                            <option value="0" {{ admin.status == '0' ? 'selected' : '' }}>Inactive</option>
+                            <option value="0" {{ admin.status == '3' ? 'selected' : '' }}>Blocked</option>
+                        </select>
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('status'), hasErrorFor('status')) }}
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-primary btn-sm btn-save">
+                <i class="fa fa-dot-circle-o"></i> Submit
+            </button>
+            <button type="reset" class="btn btn-danger btn-sm">
+                <i class="fa fa-ban"></i> Reset
+            </button>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        $('.btn-save').on('click', function(){
+            $('#form-input').submit();
+        })
+    })
+</script>
+@endsection

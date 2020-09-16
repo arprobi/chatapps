@@ -1,0 +1,98 @@
+@layout('modules.layout.main')
+
+@section('content')
+<div class="row">
+    <div class="col-md-12">
+        
+        @if(flashMessage('success'))
+            <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+                <span class="badge badge-pill badge-success">Congrats!</span>
+                {{ flashMessage('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        @endif
+        @if(flashMessage('error'))
+            <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+                <span class="badge badge-pill badge-danger">Oops!</span>
+                {{ flashMessage('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+        @endif
+
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Companies</h4>
+                <!-- DATA TABLE -->
+                <div class="table-responsive">
+                    <table class="table" id="data-table">
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th>Owner</th>
+                                <th>Description</th>
+                                <th>Register at</th>
+                                <th>Set Active</th>
+                                <th>Action</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- END DATA TABLE -->
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            var url     = '/admin/companies/fetch/data'
+            $('#data-table').DataTable({
+                responsive: true,
+                ajax: url,
+                columns: [
+                    { data: "name", searchable:true },
+                    { data: "owner.name", searchable:true },
+                    { data: "description", searchable:true },
+                    { data: "created_at", searchable:true },
+                    { data: "status", searchable:true },
+                    {
+                        "mRender": function(data, type, row) {
+                            return  '<div class="table-data-feature">' + 
+                                        '<button class="btn mr-1 btn-info btn-xs btn-show" data-id="' + row.id + '" data-toggle="tooltip" data-placement="top" title="Show">' +
+                                            'Show' + 
+                                        '</button>' +
+                                        '<button class="btn mr-1 btn-warning btn-xs btn-edit" data-id="' + row.id + '" data-toggle="tooltip" data-placement="top" title="Edit">' +
+                                            'Edit' + 
+                                        '</button>' +
+                                        '<button class="btn mr-1 btn-danger btn-xs btn-delete" data-id="' + row.id + '" data-toggle="tooltip" data-placement="top" title="Delete">' +
+                                            'Delete' + 
+                                        '</button>' +
+                                    '</div>';
+                        }
+                    }
+                ],
+                columnDefs: [ 
+                    {
+                        targets: 4, 
+                        render: function(data, type, row) {
+                            if (row.status === 1) {
+                                return '<span class="label label-success px-2 btn-setactive" style="cursor: pointer;" data-id="'+row.id+'" data-status="active">Innactive</span>'
+                            }
+                            if (row.status === 0) {
+                                return '<span class="label label-danger px-2 btn-setactive" style="cursor: pointer;" data-id="'+row.id+'" data-status="inactive">Innactive</span>'
+                            }
+                        }
+                    },
+                    {targets: 5, orderable: false},
+                ],
+            });
+        } );
+    </script>
+@endsection

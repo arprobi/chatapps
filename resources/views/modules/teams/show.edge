@@ -1,0 +1,58 @@
+@layout('modules.layout.main')
+
+@section('content')
+<div class="row">
+    <div class="col-md-12">
+        <!-- DETAIL DATA -->
+        <div class="col-md-12">
+            <!-- USER DATA-->
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <h3 class="title-3 m-b-30">
+                        <i class="zmdi zmdi-case"></i>{{ team.name }}</h3>
+                    </div>
+
+                    <hr class="mr-auto">
+
+                    <h4 class="bd-lead mb-2">Company</h4>
+                    <p>{{ team.company.name }}</p>
+                    
+                    <hr class="mr-auto">
+
+                    <h4 class="bd-lead mb-2">Description</h4>
+                    <p>{{ team.description ? team.description : '-' }}</p>
+
+                    <hr class="mr-auto">
+
+                    <h4 class="bd-lead mb-2">Author</h4>
+                    <p>{{ team.owner.name }}</p>
+
+                    <hr class="mr-auto">
+
+                    <h4 class="bd-lead mb-2">Status</h4>
+                    @if(team.status === 1)
+                        <p><span class="badge badge-success">Active</span></p>
+                    @else
+                        <p><span class="badge badge-danger">Inactive</span></p>
+                    @endif
+
+                    <hr class="mr-auto">
+
+                    <h4 class="bd-lead mb-2">Projects</h4>
+                    <div class="list-group mb-2">
+                        @each(project in team.projects) 
+                            <a href="{{ route('admin.projects.show', { id: project.id }) }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                                {{ project.project_name }}
+                            </a>
+                        @endeach
+                    </div>
+                </div>
+            </div>
+            <!-- END USER DATA-->
+            
+        </div>
+        
+    </div>
+</div>
+@endsection

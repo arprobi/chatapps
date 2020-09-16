@@ -1,0 +1,65 @@
+@layout('modules.layout.main')
+
+@section('content')
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <strong>Update Company</strong> Form
+        </div>
+        <div class="card-body card-block">
+            <form action="{{ route('admin.companies.update', {id: company.id}) }}" method="POST" class="form-horizontal" id="form-input">
+                {{ csrfField() }}
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="name" class=" form-control-label">Company Name</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <input type="text" name="name" placeholder="name" class="{{ getErrorFor('name') ? 'is-invalid':'' }} form-control" value="{{ company.name }}">
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('name'), hasErrorFor('name')) }}
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="description" class=" form-control-label">Description</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <textarea name="description" class="{{ getErrorFor('description') ? 'is-invalid':'' }} form-control">{{ company.description }}</textarea>
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('description'), hasErrorFor('description')) }}
+                    </div>
+                </div>
+                
+                <div class="row form-group">
+                    <div class="col col-md-3">
+                        <label for="password" class=" form-control-label">Status</label>
+                    </div>
+                    <div class="col-12 col-md-9">
+                        <select name="status" class="{{ getErrorFor('status') ? 'is-invalid':'' }} form-control">
+                            <option value="1" {{ company.status == 1 ? 'selected' : '' }}>Active</option>
+                            <option value="0" {{ company.status == 0 ? 'selected' : '' }}>Inactive</option>
+                        </select>
+                        {{ elIf('<span class="text-danger">$self</span>', getErrorFor('status'), hasErrorFor('status')) }}
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-primary btn-sm btn-save">
+                <i class="fa fa-dot-circle-o"></i> Submit
+            </button>
+            <button type="reset" class="btn btn-danger btn-sm">
+                <i class="fa fa-ban"></i> Reset
+            </button>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        $('.btn-save').on('click', function(){
+            $('#form-input').submit();
+        })
+    })
+</script>
+@endsection

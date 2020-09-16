@@ -1,0 +1,36 @@
+@layout('modules.layout.main')
+
+@section('content')
+<div class="row">
+    <div class="col-md-12">
+        <!-- DETAIL DATA -->
+        <div class="col-md-12">
+            <!-- USER DATA-->
+            <div class="card">
+                <div class="card-body">
+                    <div class="col-md-12">
+                        <h3 class="title-3 m-b-30">
+                        <i class="zmdi zmdi-case"></i>{{ profile.name }}</h3>
+                    </div>
+                    <h4 class="bd-lead mb-2">Username</h4>
+                    <p>{{ profile.username }}</p>
+
+                    <hr class="mr-auto">
+
+                    <h4 class="bd-lead mb-2">Email</h4>
+                    <p>{{ profile.email }}</p>
+
+                    <hr class="mr-auto">
+
+                    <h4 class="bd-lead mb-2">Status</h4>
+                    <p>{{ profile.str_status }}</p>
+                    
+                </div>
+            </div>
+            <!-- END USER DATA-->
+            
+        </div>
+        
+    </div>
+</div>
+@endsection

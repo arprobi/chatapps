@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- Head-->
+    <head>
+        @include('modules.layout.block.head')
+        @!section('style')
+    </head>
+
+    <body>
+        <!--*******************
+            Preloader start
+        ********************-->
+        <div id="preloader">
+            <div class="loader">
+                <svg class="circular" viewBox="25 25 50 50">
+                    <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+                </svg>
+            </div>
+        </div>
+        <!--*******************
+            Preloader end
+        ********************-->
+        
+
+         <!--**********************************
+            Main wrapper start
+        ***********************************-->
+        <div id="main-wrapper">
+            
+            <!--**********************************
+                Nav header start
+            ***********************************-->
+            <div class="nav-header">
+                <div class="brand-logo">
+                    <a href="index.html">
+                        <b class="logo-abbr"><img src="/assets/images/logo.png" alt=""> </b>
+                        <span class="logo-compact"><img src="/assets/images/logo-compact.png" alt=""></span>
+                        <span class="brand-title text-center">
+                            <div style="color: white; font-size: 20px; font-wight: 500">
+                                <img src="/assets/images/logo.png" alt=""> Kerja Team
+                            </div>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <!--**********************************
+                Nav header end
+            ***********************************-->
+
+            <!-- HEADER -->
+            @include('modules.layout.block.header')
+
+            <!-- MENU SIDEBAR-->
+            @include('modules.layout.block.sidebar')
+
+            <!--**********************************
+                Content body start
+            ***********************************-->
+            <div class="content-body">
+                <div class="row page-titles mx-0">
+                    <div class="col p-md-0">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
+                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Home</a></li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- row -->
+    
+                <div class="container-fluid">
+                    @!section('content')
+                </div>
+                <!-- #/ container -->
+            </div>
+            <!--**********************************
+                Content body end
+            ***********************************-->
+
+            <div class="footer">
+                <div class="copyright">
+                    <p>Copyright &copy; Kerja Team 2019</p>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- SCRIPT-->
+        @include('modules.layout.block.script')
+        @!section('script')
+        {{ script('js/actions.js') }}
+    </body>
+</html>
